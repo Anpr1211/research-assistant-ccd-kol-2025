@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Research Assistant</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>AI Research Assistant</h1>
+      <p>
+        Enter your research question below and get answers from a corpus of
+        papers.
+      </p>
+
+      <textarea
+        id="queryInput"
+        placeholder="e.g., Applications of AI in healthcare"
+        rows="4"
+      ></textarea>
+      <button id="submitButton">Get Answer</button>
+
+      <div class="output-container">
+        <h2>Answer:</h2>
+        <div id="outputArea">
+          <p>Your answer will appear here...</p>
+        </div>
+        <div id="loadingIndicator" style="display: none">Loading...</div>
+        <div id="errorIndicator" style="display: none; color: red"></div>
+      </div>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+      import {
+        getFunctions,
+        httpsCallable,
+      } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-functions.js";
+
+      const firebaseConfig = await fetch("/__/firebase/init.json");
+      initializeApp(await firebaseConfig.json());
+
+      async function generateAnswer() {
+        const loadingIndicator = document.querySelector("#loadingIndicator");
+        const errorIndicator = document.querySelector("#errorIndicator");
+        const outputArea = document.querySelector("#outputArea");
+
+        try {
+          loadingIndicator.style.display = "block";
+          errorIndicator.style.display = "none";
+          outputArea.innerHTML = "";
+
+          const researchFlow = httpsCallable(
+            getFunctions(),
+            "researchAssistant"
+          );
+          const query = document.querySelector("#queryInput").value;
+
+          if (!query.trim()) {
+            throw new Error("Please enter a research question");
+          }
+
+          const response = await researchFlow({ query: query });
+          outputArea.innerHTML = `<p>${response.data}</p>`;
+        } catch (error) {
+          console.error("Error:", error);
+          errorIndicator.textContent =
+            error.message || "An error occurred. Please try again.";
+          errorIndicator.style.display = "block";
+          outputArea.innerHTML = "<p>Your answer will appear here...</p>";
+        } finally {
+          loadingIndicator.style.display = "none";
+        }
+      }
+
+      document
+        .querySelector("#submitButton")
+        .addEventListener("click", generateAnswer);
+
+      // Allow Enter key to submit
+      document
+        .querySelector("#queryInput")
+        .addEventListener("keydown", (event) => {
+          if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) {
+            generateAnswer();
+          }
+        });
+    </script>
+  </body>
+</html>
