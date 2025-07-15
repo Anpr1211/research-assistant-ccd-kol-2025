@@ -1,6 +1,7 @@
 # AI-Powered Research Assistant with Verifiable Citations
 
 **Live Demo:** [https://research-assistant-tool-461713.web.app/](https://research-assistant-tool-461713.web.app/)
+**Slides:** [Reliable AI for Research]([https://research-assistant-tool-461713.web.app/](https://docs.google.com/presentation/d/1CiYYLC1BDjzE3VF9nGH4IpQ0y95mrTUVD32iLGHb1QU/edit?usp=sharing))
 
 This project is an AI-powered research assistant designed to return **reliable, citation-backed research papers** instead of hallucinated results. It’s ideal for researchers, grant writers, and policy teams who need trustworthy information with proper citations.
 
