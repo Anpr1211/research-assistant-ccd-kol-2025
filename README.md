@@ -43,9 +43,9 @@ You can try it live here:
 
 | Layer           | Technology / Tool                       |
 |------------------|------------------------------------------|
-| **Frontend**     | Firebase Hosting (HTML/CSS)             |
-| **Backend**      | Firebase Functions (with Genkit)        |
-| **AI Models**    | Gemini 1.5 Pro / Flash via Genkit       |
+| **Frontend**     | HTML/CSS/JavaScript (Firebase Hosting)  |
+| **Backend**      | Genkit (Firebase Functions)        |
+| **AI Models**    | Gemini 2.5 Flash via Genkit       |
 | **Data Layer**   | Cloud SQL (PostgreSQL with pgvector)    |
 | **Orchestration**| Firebase Genkit                         |
 | **Deployment**   | Firebase + Cloud Run                    |
@@ -63,12 +63,8 @@ testkit/
 │
 ├── functions/              # Backend code (Genkit + logic)
 │   ├── src/
-│   │   ├── index.ts
-│   │   └── researchAssistant.ts
-│   └── lib/
-│       ├── db.js
-│       ├── generatePoem.js
-│       └── researchAssistant.js
+│       ├── index.ts
+│       └── researchAssistant.ts
 │
 ├── firebase.json           # Firebase config
 ├── .firebaserc             # Firebase project info
@@ -96,22 +92,19 @@ cd functions
 npm install
 ```
 
-### 3. Configure `.env` File
+### 3. Set up Keys 
 
-Create a `.env` file in the root directory and include:
-
-```
-GEMINI_API_KEY=your-google-ai-key
-DATABASE_URL=postgres://username:password@host:port/dbname
+Set the Gemini Key and database credentials as secret keys in your Firebase account 
+Reference Command: firebase functions:secrets:set GEMINI_API_KEY
 ```
 
 ### 4. Start Development (Genkit)
-
+From the functions directory, run
 ```bash
-npx genkit dev
+npm run serve
 ```
 
-This will run your assistant locally.
+This will run your assistant.
 
 ---
 
