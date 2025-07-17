@@ -77,6 +77,23 @@ testkit/
 
 ---
 
+## Ingest and Embed Your Dataset
+
+Use the ingestion script to process your contextual dataset and store vector embeddings in your cloud database.
+
+This script performs the following steps:
+1. **Loads your dataset** (e.g. papers, documents, etc.)
+2. **Generates embeddings** using a model like Gemini or OpenAI
+3. **Inserts the data and embeddings** into your cloud database (e.g. PostgreSQL with `pgvector`)
+
+### Usage
+
+```bash
+python ingest.py --input data/your_dataset.json
+```
+
+---
+
 ## 🛠️ Getting Started Locally
 
 ### 1. Clone the Repository
